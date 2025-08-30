@@ -1,0 +1,22 @@
+#include <iostream>
+#include <stack>
+#include <string>
+using namespace std;
+
+int main() {
+    stack<char> ch;
+    string s = "datastructure";
+
+   
+    for (int i = 0; i < s.length(); i++) {
+        ch.push(s[i]);
+    }
+
+    
+    while (!ch.empty()) {
+        cout << ch.top();
+        ch.pop();
+    }
+
+    return 0;
+}
