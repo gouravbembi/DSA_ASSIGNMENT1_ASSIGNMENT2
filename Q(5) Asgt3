@@ -1,0 +1,38 @@
+#include <iostream>
+#include <stack>
+#include <string>
+using namespace std;
+
+
+int solve(int val1, int val2, char op) {
+    if (op == '+') return val1 + val2;
+    if (op == '-') return val1 - val2;
+    if (op == '*') return val1 * val2;
+    if (op == '/') return val1 / val2;
+    return 0;
+}
+
+int main() {
+    string s = "562+*9-";  
+    stack<int> val;
+   
+
+    for (int i = 0; i < s.length(); i++) {
+   if(s[i]>=48 && s[i]<=57){
+            val.push((s[i]-48));
+        }
+        else { 
+            char op=s[i];
+            int val1 = val.top(); val.pop();
+            int val2 = val.top(); val.pop();
+            int ans = solve(val2, val1,op);
+            val.push(ans);
+        }
+    }
+
+    cout << "Postfix Expression: " <<  s << endl;
+    cout << "Evaluated Result: " << val.top() << endl;
+
+    return 0;
+}
+
