@@ -1,0 +1,157 @@
+#include<iostream>
+using namespace std;
+
+class Node{
+    public:
+    int val;
+    Node*next;
+    Node(int val){
+        this->val=val;
+        this->next=NULL;
+    }
+};
+
+class LinkedList{
+    public:
+    Node*head;
+    Node*tail;
+    int size;
+    LinkedList(){
+        head=tail=NULL;
+        size=0;
+    }
+
+   
+    void delAThead(){
+        if(size==0){
+            cout<<"empty!"<<endl;
+            return;
+        }
+        Node*temp=head;
+        head=head->next;
+        delete temp;
+        size--;
+        if(size==0) tail=NULL; 
+    }
+
+   
+    void delATtail(){
+        if(size==0){
+            cout<<"empty!"<<endl;
+            return;
+        }
+        if(size==1){
+            delete head;
+            head=tail=NULL;
+            size=0;
+            return;
+        }
+        Node*temp=head;
+        while(temp->next!=tail){ 
+            temp=temp->next;
+        }
+        delete tail;
+        tail=temp;
+        tail->next=NULL;
+        size--;
+    }
+
+   
+    void delATidx(int idx){
+        if(size==0){
+            cout<<"empty!"<<endl;
+            return;
+        }
+        if(idx<0 || idx>=size){
+            cout<<"Invalid idx!"<<endl;
+            return;
+        }
+        if(idx==0){
+            delAThead();
+            return;
+        }
+        if(idx==size-1){
+            delATtail();
+            return;
+        }
+        Node*temp=head;
+        for(int i=0;i<idx-1;i++){   
+            temp=temp->next;
+        }
+        Node*delNode=temp->next;
+        temp->next=delNode->next;
+        delete delNode;
+        size--;
+    }
+
+    int getATidx(int idx){
+        if(idx<0 || idx>=size){
+            cout << "Invalid index" << endl;
+            return -1; 
+        }
+        Node*temp=head;
+        for(int i=0;i<idx;i++){ 
+            temp=temp->next;
+        }
+        return temp->val;
+    }
+
+   
+    void insertATfront(int val){
+        Node*temp=new Node(val);
+        if(size==0) {
+            head=tail=temp;
+        }
+        else{
+            temp->next=head; 
+            head=temp;
+        }
+        size++;
+    }
+
+   
+    void insertATend(int val){
+        Node*temp=new Node(val);
+        if(size==0) {
+            head=tail=temp;
+        }
+        else{
+            tail->next=temp;  
+            tail=temp;        
+        }
+        size++;
+    }
+
+    
+    void display(){
+        Node*temp=head;
+        while(temp!=NULL){
+            cout<<temp->val<<" ";
+            temp=temp->next;
+        }
+        cout<<endl;
+    }
+};
+    
+
+int main(){
+    LinkedList ll;
+    ll.insertATfront(50);
+    ll.display();  
+    ll.insertATfront(40);
+    ll.display();   
+    ll.insertATend(60);
+    ll.display();   
+
+    cout << "Value at index 2: " << ll.getATidx(2) << endl; 
+
+    ll.delATidx(2); 
+    ll.display();   
+
+    ll.delAThead();  
+    ll.display();   
+
+    ll.delATtail(); 
+    
+    ll.display();   
+}
