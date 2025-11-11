@@ -1,0 +1,53 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+    Node(int val) : data(val), next(nullptr) {}
+};
+
+class CircularLinkedList {
+private:
+    Node* tail;
+public:
+    CircularLinkedList() : tail(nullptr) {}
+
+    void insert(int val) {
+        Node* newNode = new Node(val);
+        if (tail == nullptr) {
+            tail = newNode;
+            tail->next = tail;
+        } else {
+            newNode->next = tail->next;
+            tail->next = newNode;
+            tail = newNode;
+        }
+    }
+
+    void display() {
+        if (tail == nullptr) {
+            cout << "List is empty.\n";
+            return;
+        }
+        Node* head = tail->next;
+        Node* temp = head;
+        while (true) {
+            cout << temp->data << " ";
+            temp = temp->next;
+            if (temp == head) break;
+        }
+        cout << head->data << endl;
+    }
+};
+
+int main() {
+    CircularLinkedList cll;
+    cll.insert(20);
+    cll.insert(100);
+    cll.insert(40);
+    cll.insert(80);
+    cll.insert(60);
+    cll.display();
+    return 0;
+}
